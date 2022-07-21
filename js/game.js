@@ -10,7 +10,7 @@ const MEDIUM = 8
 const HARD = 12
 const FLAG = '	&#128681'
 //////////////Global Vars///////
-var gBombsCounter = 0
+var gBombsCounter
 var gBoard
 var gGame = {
     isOn: false,
@@ -25,7 +25,7 @@ var gCellsCount
 var gLevel = {
     SIZE: 4,
     MINES: 2
-};
+}
 
 function markFlag(eve) {
     eve.preventDefault()
@@ -70,29 +70,25 @@ function incrementSeconds() {
 }
 
 function initGame() {
+    gBombsCounter = 0
     document.querySelector('.face').innerHTML = NORMAL_SMILEY
-    gBoard = createMat(gLevel.SIZE)
-    renderBoard(gBoard)
     seconds = 0
     minutes = 0
     gGame.shownCount = 0
     gGame.markedCount = 0
     gGame.secsPassed = 0
-    console.log('gBoard:', gBoard)
     gBoard = createMat(gLevel.SIZE)
-    console.log('gBoard:', gBoard)
-    renderBoard(gBoard)
-    randomMinePos(gBoard)
-    setMinesNegsCount(gBoard)
     gCellsCount = Math.pow(gLevel.SIZE, 2) - gLevel.MINES
     gGame.isOn = true
     gTimer = setInterval(incrementSeconds, 1000);
+    play()
 }
-
 function play() {
-
+    renderBoard(gBoard)
+    console.log('ehy');
+    randomMinePos(gBoard)
+    setMinesNegsCount(gBoard)
 }
-
 
 function cellClicked(elCell, i, j) {
     if (!gGame.isOn) return
@@ -180,18 +176,18 @@ function creatCell() {
 function randomMinePos(board) {
     var emptyCells = getEmptyCells(board)
     while (gBombsCounter < gLevel.MINES) {
-        var getEmptyCell = drawNum(emptyCells)
         gBombsCounter++
+        console.log('gBombsCounter:', gBombsCounter)
+
+        console.log('gLevel.MINES:', gLevel.MINES)
+
+        var getEmptyCell = drawNum(emptyCells)
         board[getEmptyCell.i][getEmptyCell.j].isMine = true
     }
     return
 }
 
 function resetGame() {
-    gBoard = createMat(gLevel.SIZE)
-    renderBoard(gBoard)
-    clearInterval(gTimer)
-    gCellsCount = 0
     initGame()
 }
 
@@ -204,20 +200,26 @@ function checkGameIsover() {
     }
 }
 
-function getDifficulty(elBtn) {
-    if (elBtn.innerText === 'Easy') {
-        gLevel.SIZE = EASY
-        gLevel.MINES = 2
+function easy() {
+    gLevel = {
+        SIZE: 4,
+        MINES: 2
     }
-    else if (elBtn.innerText === 'Medium') {
-        gLevel.SIZE = MEDIUM
-        gLevel.MINES = 12
+    initGame()
+}
+function medium() {
+    gLevel = {
+        SIZE: 8,
+        MINES: 12
     }
-    else if (elBtn.innerText === 'Hard') {
-        gLevel.SIZE = HARD
-        gLevel.MINES = 30
+    initGame()
+}
+function hard() {
+    gLevel = {
+        SIZE: 12,
+        MINES: 30
     }
-    resetGame()
+    initGame()
 }
 
 
