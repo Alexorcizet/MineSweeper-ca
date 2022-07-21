@@ -19,9 +19,10 @@ function countNeighborsBombs(cellI, cellJ, mat) {
 //         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
 //             if (i === cellI && j === cellJ) continue;
 //             if (j < 0 || j >= mat[0].length) continue;
-//             console.log('mat[i][j].minesAroundCount:', mat[i][j].minesAroundCount)
-
-//             if (mat[i][j].minesAroundCount > 0) cellClicked(elCell, i, j)
+//             if (!mat[i][j].isMine && !mat[i][j].isShown) {
+//                 var elCell = document.getElementById(`${i}-${j}`)
+//                 cellClicked(elCell, i, j)
+//             }
 //         }
 //     }
 //     return
