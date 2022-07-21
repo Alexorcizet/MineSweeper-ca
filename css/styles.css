@@ -4,28 +4,20 @@
 
 .container {
   width: 600px;
-  height: 700px;
+  height: 600px;
   background-color: aquamarine;
   margin: 100px auto;
-  text-align: center;
 }
 table {
   margin: auto;
 }
 .cell {
   text-align: center;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border: 1px solid black;
-  background-color: lightgrey;
 }
 
 .cell:hover {
-  background-color: rgb(179, 243, 152);
-}
-
-.header {
-  width: 300px;
-  height: 100px;
-  margin: 100px auto;
+  background-color: rgb(154, 154, 229);
 }
