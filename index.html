@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Mine Sweeper Sprint</title>
+  </head>
+  <body onload="initGame()">
+    <div class="container">
+      <div class="header">
+        <h1 class="mines-left">mines left to go</h1>
+        <p>Pease choose a difficulty first</p>
+        <button onclick="resetGame()" class="face">&#128516</button>
+        <button onclick="getDifficulty(this)">Easy</button>
+        <button onclick="getDifficulty(this)">Medium</button>
+        <button onclick="getDifficulty(this)">Hard</button>
+        <p class="timer"><span class="min"></span><span class="sec"></span></p>
+      </div>
+      <div class="board-container"></div>
+    </div>
+    <script src="js/util.js"></script>
+    <script src="js/game.js"></script>
+  </body>
+</html>
