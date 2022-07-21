@@ -69,9 +69,8 @@ function renderBoard(mat) {
     for (var i = 0; i < mat.length; i++) {
         strHTML += '\n<tr>\n'
         for (var j = 0; j < mat[0].length; j++) {
-            var cell = mat[i][j]
             strHTML += `<td  id="${i}-${j}" class="cell  "
-            onclick="cellClicked(this, ${i},${j})">`
+            onclick="cellClicked(this, ${i},${j})" oncontextmenu="markFlag(event)">`
             strHTML += '</td>\n'
         }
         strHTML += `</tr>`

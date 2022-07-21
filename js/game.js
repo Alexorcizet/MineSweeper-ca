@@ -70,6 +70,7 @@ function incrementSeconds() {
 }
 
 function initGame() {
+    clearInterval(gTimer)
     gBombsCounter = 0
     document.querySelector('.face').innerHTML = NORMAL_SMILEY
     seconds = 0
@@ -83,9 +84,9 @@ function initGame() {
     gTimer = setInterval(incrementSeconds, 1000);
     play()
 }
+
 function play() {
     renderBoard(gBoard)
-    console.log('ehy');
     randomMinePos(gBoard)
     setMinesNegsCount(gBoard)
 }
@@ -137,22 +138,7 @@ function expandShown(board, elCell, i, j) {
     }
 }
 
-function renderBoard(mat) {
-    var strHTML = '<table><tbody>\n'
-    for (var i = 0; i < mat.length; i++) {
-        strHTML += '\n<tr>\n'
-        for (var j = 0; j < mat[0].length; j++) {
-            var cell = mat[i][j]
-            strHTML += `<td  id="${i}-${j}" class="cell  "
-            onclick="cellClicked(this, ${i},${j})" oncontextmenu="markFlag(event)">`
-            strHTML += '</td>\n'
-        }
-        strHTML += `</tr>`
-    }
-    strHTML += '</tbody></table>'
-    const elContainer = document.querySelector('.board-container')
-    elContainer.innerHTML = strHTML
-}
+
 
 function setMinesNegsCount(board) {
     for (var i = 0; i < board.length; i++) {
@@ -177,10 +163,6 @@ function randomMinePos(board) {
     var emptyCells = getEmptyCells(board)
     while (gBombsCounter < gLevel.MINES) {
         gBombsCounter++
-        console.log('gBombsCounter:', gBombsCounter)
-
-        console.log('gLevel.MINES:', gLevel.MINES)
-
         var getEmptyCell = drawNum(emptyCells)
         board[getEmptyCell.i][getEmptyCell.j].isMine = true
     }
