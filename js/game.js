@@ -12,7 +12,12 @@ const FLAG = '	&#128681'
 //////////////Global Vars///////
 var gBombsCounter = 0
 var gBoard
-var gGame
+var gGame = {
+    isOn: false,
+    shownCount: 0,
+    markedCount: 0,
+    secsPassed: 0,
+}
 var gTimer
 var seconds
 var minutes
@@ -28,11 +33,13 @@ function markFlag(eve) {
     if (!gBoard[currCell[0]][currCell[1]].isMarked && gGame.isOn && !gBoard[currCell[0]][currCell[1]].isShown) {
         gBoard[currCell[0]][currCell[1]].isMarked = true
         eve.path[0].innerHTML = FLAG
+        gGame.markedCount++
     } else if (gBoard[currCell[0]][currCell[1]].isShown) {
         return
     } else {
         gBoard[currCell[0]][currCell[1]].isMarked = false
         eve.path[0].innerHTML = ''
+        gGame.markedCount--
     }
 
 }
@@ -64,16 +71,13 @@ function incrementSeconds() {
 
 function initGame() {
     document.querySelector('.face').innerHTML = NORMAL_SMILEY
-    seconds = 0
-    minutes = 0
-    gGame = {
-        isOn: false,
-        shownCount: 0,
-        markedCount: 0,
-        secsPassed: 0
-    }
     gBoard = createMat(gLevel.SIZE)
     renderBoard(gBoard)
+    seconds = 0
+    minutes = 0
+    gGame.shownCount = 0
+    gGame.markedCount = 0
+    gGame.secsPassed = 0
     console.log('gBoard:', gBoard)
     gBoard = createMat(gLevel.SIZE)
     console.log('gBoard:', gBoard)
@@ -120,7 +124,7 @@ function gameOver() {
     document.querySelector('.face').innerHTML = SAD_SMILEY
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
-            if (gBoard[i][j].isMine) {
+            if (gBoard[i][j].isMine && !gBoard[i][j].isMarked) {
                 var newBomb = document.getElementById(`${i}-${j}`)
                 newBomb.innerHTML = `${BOMB}`
             }
@@ -129,13 +133,13 @@ function gameOver() {
     return
 }
 
-// function expandShown(board, elCell, i, j) {
-//     for (var i = 0; i < board.length; i++) {
-//         for (var j = 0; j < board.length; j++) {
-//             openNegCells(elCell, i, j, board)
-//         }
-//     }
-// }
+function expandShown(board, elCell, i, j) {
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board.length; j++) {
+            openNegCells(elCell, i, j, board)
+        }
+    }
+}
 
 function renderBoard(mat) {
     var strHTML = '<table><tbody>\n'
@@ -192,7 +196,7 @@ function resetGame() {
 }
 
 function checkGameIsover() {
-    if (Math.pow(gLevel.SIZE, 2) - gLevel.MINES === gGame.shownCount) {
+    if (Math.pow(gLevel.SIZE, 2) - gLevel.MINES === gGame.shownCount && gGame.markedCount === gLevel.MINES) {
         gGame.isOn = false
         clearInterval(gTimer)
         document.querySelector('.face').innerHTML = SUNGLASS_SMILEY
