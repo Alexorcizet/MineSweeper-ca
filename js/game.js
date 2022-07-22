@@ -165,13 +165,7 @@ function expandShown(board, elCell, cellI, cellJ) {
             if (j < 0 || j >= board[0].length) continue;
             if (board[i][j].isMine || board[i][j].isShown) continue
             else {
-                var elCell = document.getElementById(`${i}-${j}`)
-                gBoard[i][j].isShown = true
-                gGame.shownCount++
-                console.log('gGame.markedCount:', gGame.markedCount)
-                if (!board[i][j].minesAroundCount) elCell.innerText = ' '
-                else elCell.innerText = gBoard[i][j].minesAroundCount
-                elCell.style.backgroundColor = 'darkGrey'
+                cellClicked(elCell, i, j)
             }
         }
     }
@@ -182,6 +176,7 @@ function renderCell(i, j, value, color) {
     gBoard[i][j].isShown = true
     elCell.style.backgroundColor = color
     elCell.innerHTML = value
+    elCell.style.color = numColors(gBoard[i][j].minesAroundCount)
     if (value === BOMB) return
     gGame.shownCount++
 }
@@ -244,7 +239,16 @@ function checkGameIsOver() {
     }
 }
 
-
+function numColors(value) {
+    if (value === 1) return 'blue'
+    if (value === 2) return 'green'
+    if (value === 3) return 'red'
+    if (value === 4) return 'purple'
+    if (value === 5) return 'maroon'
+    if (value === 6) return 'turquoise'
+    if (value === 7) return 'black'
+    if (value === 8) return 'magenta'
+}
 
 
 
