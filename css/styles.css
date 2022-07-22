@@ -12,25 +12,35 @@ body {
   );
 }
 
-.container {
+.data-container {
   font-family: monospace;
   width: 800px;
-  height: 700px;
   border-radius: 15px;
-  margin: 100px auto;
+  margin: 15px auto;
   text-align: center;
 }
 
 table {
   max-width: 600px;
   font-size: 1.4rem;
-  margin: auto;
+  margin: -150px auto;
 }
 
+.difficulty {
+  width: 100%;
+  height: 50px;
+  margin: auto;
+}
 .timer {
   font-size: 1.5em;
   font-weight: 600;
   color: rgb(247, 247, 231);
+}
+
+.reset-and-time {
+  width: 50%;
+  text-align: center;
+  margin: auto;
 }
 
 .cell {

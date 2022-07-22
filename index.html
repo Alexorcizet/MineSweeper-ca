@@ -9,17 +9,23 @@
   </head>
   <body  onload="initGame()">
     <div class="container">
-      <div class="header">
-        <h1 class="mines-left"></h1>
-        <p class="life">Lives left : 3</p>
-        <button onclick="resetGame()" class="face">&#128516</button>
-        <button onclick="easy()">Easy</button>
-        <button onclick="medium()">Medium</button>
-        <button onclick="hard()">Hard</button>
-        <p class="timer"><span class="min">Timer : 00 :</span><span class="sec">00</span></p>
+      <div class="data-container">
+        <div class="header">
+          <h1 class="mines-left"></h1>
+          <p class="life"></p></div>
+          <div class="difficulty">
+            <button onclick="easy()">Easy</button>
+            <button onclick="medium()">Medium</button>
+            <button onclick="hard()">Hard</button>
+          </div>
+        </div>
+        <div class="reset-and-time"><button onclick="resetGame()" class="face">&#128516</button>
+          <p class="timer"><span class="min">Timer : 00 :</span><span class="sec">00</span></p></div>
+          
+          <div class="board-container"></div>
+        </div>
       </div>
-      <div class="board-container"></div>
-    </div>
+      </div>
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
   </body>
