@@ -4,37 +4,39 @@ const BOMB = '&#128163'
 const NORMAL_SMILEY = '&#128516'
 const SUNGLASS_SMILEY = '&#128526;'
 const SAD_SMILEY = '&#128534'
+const FLAG = '&#128681'
+const HEART = '&#128150'
+const DEAD = '&#9760'
 const EMPTY = ' '
 const EASY = 4
 const MEDIUM = 8
 const HARD = 12
-const FLAG = '	&#128681'
 //////////////Global Vars///////
-var gBombsCounter
-var gBoard
 var gGame = {
     isOn: false,
     shownCount: 0,
     markedCount: 0,
     secsPassed: 0,
 }
-var firstClicked
-var gTimer
-var seconds
-var minutes
-var gCellsCount
 var gLevel = {
     SIZE: 4,
     MINES: 2,
     LIVES: 1,
 }
+var gBombsCounter
+var gBoard
+var firstClicked
+var gTimer
+var gSeconds
+var gMinutes
+var gCellsCount
 //////////////////starter Functions ////////////////////
 function initGame() {
     gGame.shownCount = 0
     gGame.markedCount = 0
     gGame.secsPassed = 0
-    seconds = 0
-    minutes = 0
+    gSeconds = 0
+    gMinutes = 0
     gBombsCounter = 0
     incrementSeconds()
     clearInterval(gTimer)
@@ -43,7 +45,7 @@ function initGame() {
     if (gLevel.SIZE === 4) gLevel.LIVES = 1
     if (gLevel.SIZE === 8) gLevel.LIVES = 3
     if (gLevel.SIZE === 12) gLevel.LIVES = 3
-    document.querySelector('.life').innerHTML = `You're Current life count is :${gLevel.LIVES} `
+    document.querySelector('.life').innerHTML = `You're Current life count is :${HEART.repeat(gLevel.LIVES)}`
     gCellsCount = Math.pow(gLevel.SIZE, 2) - gLevel.MINES
     firstClicked = false
     gBoard = createMat(gLevel.SIZE)
@@ -103,21 +105,21 @@ function incrementSeconds() {
     var elSec = document.querySelector('.sec');
     var secHTML
     var minHTML
-    if (seconds === 60) {
-        minutes++
-        seconds = 0
+    if (gSeconds === 60) {
+        gMinutes++
+        gSeconds = 0
     }
-    if (seconds < 10) {
-        secHTML = `0${seconds}`
-    } else if (seconds < 60) {
-        secHTML = `${seconds}`
+    if (gSeconds < 10) {
+        secHTML = `0${gSeconds} `
+    } else if (gSeconds < 60) {
+        secHTML = `${gSeconds} `
     }
-    if (minutes < 10) {
-        minHTML = `Timer: 0${minutes}:`
-    } else if (seconds < 60) {
-        minHTML = `Timer: ${minutes}:`
+    if (gMinutes < 10) {
+        minHTML = `Timer: 0${gMinutes}: `
+    } else if (gSeconds < 60) {
+        minHTML = `Timer: ${gMinutes}: `
     }
-    seconds += 1;
+    gSeconds += 1;
     gGame.secsPassed++
     elMin.innerHTML = minHTML
     elSec.innerHTML = secHTML
@@ -149,7 +151,8 @@ function cellClicked(elCell, i, j) {
         } else {
             gGame.markedCount++
             gLevel.LIVES--
-            document.querySelector('.life').innerHTML = `You're Current life count is :${gLevel.LIVES} `
+            if (gLevel.LIVES > 0) document.querySelector('.life').innerHTML = `You're Current life count is :${HEART.repeat(gLevel.LIVES)} `
+            else document.querySelector('.life').innerHTML = `MIND THE BOMBS OR ELSE YOU WILL BE ${DEAD} `
         }
         renderCell(i, j, BOMB, 'red')
     }
