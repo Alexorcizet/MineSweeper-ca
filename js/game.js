@@ -138,29 +138,20 @@ function cellClicked(elCell, i, j) {
     }
     if (gBoard[i][j].isShown || !gGame.isOn || gBoard[i][j].isMarked) return
     if (!gBoard[i][j].minesAroundCount && !gBoard[i][j].isMine) {
+        renderCell(i, j, ' ', 'darkGrey')
         expandShown(gBoard, elCell, i, j)
-        gBoard[i][j].isShown = true
-        elCell.innerText = ' '
-        elCell.style.backgroundColor = 'darkGrey'
-        gGame.shownCount++
     }
     else if (gBoard[i][j].minesAroundCount && !gBoard[i][j].isMine) {
-        gBoard[i][j].isShown = true
-        gGame.shownCount++
-        elCell.innerText = gBoard[i][j].minesAroundCount
-        elCell.style.backgroundColor = 'darkGrey'
+        renderCell(i, j, gBoard[i][j].minesAroundCount, 'darkGrey')
     } else {
         if (gLevel.LIVES === 0) {
             gameOver()
-            elCell.innerHTML = `${BOMB}`
-            elCell.style.backgroundColor = 'red'
         } else {
             gGame.markedCount++
             gLevel.LIVES--
-            elCell.innerHTML = `${BOMB}`
             document.querySelector('.life').innerHTML = `You're Current life count is :${gLevel.LIVES} `
-            elCell.style.backgroundColor = 'red'
         }
+        renderCell(i, j, BOMB, 'red')
     }
     checkGameIsOver()
 }
@@ -184,6 +175,15 @@ function expandShown(board, elCell, cellI, cellJ) {
             }
         }
     }
+}
+
+function renderCell(i, j, value, color) {
+    const elCell = document.getElementById(`${i}-${j}`)
+    gBoard[i][j].isShown = true
+    elCell.style.backgroundColor = color
+    elCell.innerHTML = value
+    if (value === BOMB) return
+    gGame.shownCount++
 }
 
 function easy() {
