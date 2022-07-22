@@ -81,21 +81,26 @@ function randomMinePos(board) {
     return
 }
 //////////////////////////////////////////////////////////////////////////////INGAME functions//////////////////////////////////////////////////////////////////////////////
+
 ////////////////////Marking a cell with Flags ///////////////////
 function markFlag(eve) {
     eve.preventDefault()
     var currCell = eve.path[0].id.split('-')
+    if (gBoard[currCell[0]][currCell[1]].isShown || !gGame.isOn) {
+        return
+    }
+    document.querySelector('.mines-left').innerHTML = `You have to disable ${gBombsCounter} bombs, Good luck!`
     if (!gBoard[currCell[0]][currCell[1]].isMarked && gGame.isOn && !gBoard[currCell[0]][currCell[1]].isShown) {
+        gBombsCounter--
         gGame.markedCount++
         gBoard[currCell[0]][currCell[1]].isMarked = true
         eve.path[0].innerHTML = FLAG
         checkGameIsOver()
-    } else if (gBoard[currCell[0]][currCell[1]].isShown) {
-        return
     } else {
+        gBombsCounter++
         gBoard[currCell[0]][currCell[1]].isMarked = false
-        eve.path[0].innerHTML = ''
         gGame.markedCount--
+        eve.path[0].innerHTML = ''
         checkGameIsOver()
     }
 }
@@ -149,6 +154,8 @@ function cellClicked(elCell, i, j) {
         if (gLevel.LIVES === 0) {
             gameOver()
         } else {
+            gBombsCounter--
+            document.querySelector('.mines-left').innerHTML = `You have to disable ${gBombsCounter} bombs, Good luck!`
             gGame.markedCount++
             gLevel.LIVES--
             if (gLevel.LIVES > 0) document.querySelector('.life').innerHTML = `You're Current life count is :${HEART.repeat(gLevel.LIVES)} `

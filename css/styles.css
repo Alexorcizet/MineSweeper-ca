@@ -29,8 +29,8 @@ table {
 }
 .cell {
   text-align: center;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border: 1px solid black;
   font-size: 1rem;
   font-weight: 600;
