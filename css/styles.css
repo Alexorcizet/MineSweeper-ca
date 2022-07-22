@@ -1,12 +1,20 @@
 * {
   box-sizing: border-box;
 }
-
+body {
+  background: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 1) 0%,
+    rgb(211, 102, 52) 27%,
+    rgba(7, 56, 152, 1) 77%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
 .container {
   font-family: monospace;
   width: 600px;
-  height: 800px;
-  background-color: aquamarine;
+  height: 700px;
+  border-radius: 15px;
   margin: 100px auto;
   text-align: center;
 }
@@ -15,8 +23,9 @@ table {
 }
 
 .timer {
-  font-size: 1.3em;
+  font-size: 1.5em;
   font-weight: 600;
+  color: rgb(247, 247, 231);
 }
 .cell {
   text-align: center;
@@ -25,11 +34,12 @@ table {
   border: 1px solid black;
   font-size: 1rem;
   font-weight: 600;
-  background-color: rgb(202, 233, 162);
+  border-radius: 4px;
+  background-color: rgb(192, 234, 137);
 }
 
 .cell:hover {
-  background-color: rgb(24, 186, 250);
+  background-color: rgb(250, 152, 214);
 }
 
 .header {
@@ -49,9 +59,10 @@ button {
   height: 50px;
   border-radius: 15px;
   font-size: 1.2rem;
-  background-color: aquamarine;
   margin: 15px 15px;
   font-weight: 550;
+  color: rgb(0, 0, 0);
+  background-color: rgb(192, 234, 137);
 }
 
 button:hover {
@@ -59,7 +70,7 @@ button:hover {
 }
 
 .life {
-  font-size: 1.3em;
+  font-size: 1.5em;
   font-weight: 600;
-  color: blue;
+  color: rgb(0, 0, 10);
 }
