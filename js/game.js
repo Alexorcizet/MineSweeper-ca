@@ -130,6 +130,7 @@ function cellClicked(elCell, i, j) {
         gTimer = setInterval(incrementSeconds, 1000);
         randomMinePos(gBoard)
         if (gBoard[i][j].isMine) {
+            gBombsCounter--
             gBoard[i][j].isMine = false
             randomMinePos(gBoard)
         }
