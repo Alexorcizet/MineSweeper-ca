@@ -25,11 +25,11 @@ var gLevel = {
 }
 var gBombsCounter
 var gBoard
-var firstClicked
 var gTimer
 var gSeconds
 var gMinutes
 var gCellsCount
+var firstClicked
 //////////////////starter Functions ////////////////////
 function initGame() {
     gGame.shownCount = 0
@@ -104,7 +104,18 @@ function markFlag(eve) {
         checkGameIsOver()
     }
 }
-///////////////////Timer function////////////////////
+
+function numColors(value) {
+    if (value === 1) return 'blue'
+    if (value === 2) return 'green'
+    if (value === 3) return 'red'
+    if (value === 4) return 'purple'
+    if (value === 5) return 'maroon'
+    if (value === 6) return 'turquoise'
+    if (value === 7) return 'black'
+    if (value === 8) return 'magenta'
+}
+
 function incrementSeconds() {
     var elMin = document.querySelector('.min');
     var elSec = document.querySelector('.sec');
@@ -120,9 +131,9 @@ function incrementSeconds() {
         secHTML = `${gSeconds} `
     }
     if (gMinutes < 10) {
-        minHTML = `Timer: 0${gMinutes}: `
+        minHTML = `Timer: 0${gMinutes} : `
     } else if (gSeconds < 60) {
-        minHTML = `Timer: ${gMinutes}: `
+        minHTML = `Timer: ${gMinutes} : `
     }
     gSeconds += 1;
     gGame.secsPassed++
@@ -249,16 +260,7 @@ function checkGameIsOver() {
     }
 }
 
-function numColors(value) {
-    if (value === 1) return 'blue'
-    if (value === 2) return 'green'
-    if (value === 3) return 'red'
-    if (value === 4) return 'purple'
-    if (value === 5) return 'maroon'
-    if (value === 6) return 'turquoise'
-    if (value === 7) return 'black'
-    if (value === 8) return 'magenta'
-}
+
 
 
 
