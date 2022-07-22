@@ -20,10 +20,14 @@ body {
   text-align: center;
 }
 
-table {
-  max-width: 600px;
-  font-size: 1.4rem;
-  margin: -150px auto;
+.header {
+  width: 600px;
+  height: 100px;
+  margin: 50px auto;
+}
+
+.hints {
+  font-size: 1.5em;
 }
 
 .difficulty {
@@ -31,16 +35,23 @@ table {
   height: 50px;
   margin: auto;
 }
+
+.reset-and-time {
+  width: 50%;
+  text-align: center;
+  margin: auto;
+}
+
 .timer {
   font-size: 1.5em;
   font-weight: 600;
   color: rgb(247, 247, 231);
 }
 
-.reset-and-time {
-  width: 50%;
-  text-align: center;
-  margin: auto;
+table {
+  max-width: 600px;
+  font-size: 1.4rem;
+  margin: -150px auto;
 }
 
 .cell {
@@ -55,12 +66,6 @@ table {
 
 .cell:hover {
   background-color: rgb(250, 152, 214);
-}
-
-.header {
-  width: 600px;
-  height: 100px;
-  margin: 50px auto;
 }
 
 .board-container {

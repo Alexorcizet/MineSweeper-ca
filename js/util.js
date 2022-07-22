@@ -23,6 +23,16 @@ function getEmptyCells(board) {
     }
     return emptyCells
 }
+function getNoneMInesOrSHownCells(board) {
+    var emptyCells = []
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board[i].length; j++) {
+            if (!board[i][j].isMine && !board[i][j].isShown) emptyCells.push({ i, j })
+        }
+    }
+    return emptyCells
+}
+
 
 function drawNum(arr) {
     var idx = getRandomInt(0, arr.length - 1)
