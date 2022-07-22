@@ -218,9 +218,7 @@ function renderCell(i, j, value, color) {
 function getHint() {
 
     if (!gGame.isOn) return
-
     hintCount--
-
     if (hintCount === 0) document.querySelector('.hints').innerHTML = 'You are out of hints. Good luck'
     else document.querySelector('.hints').innerHTML = `You have  <span onclick="getHint()">${HINT.repeat(hintCount)}</span> hints, use them wisely!`
 
@@ -238,9 +236,6 @@ function getHint() {
 }
 
 function reverseHint(cell, i, j) {
-    gGame.isMarked--
-    console.log('cell:', cell)
-    gBoard[i][j].isShown = false
     cell.innerHTML = ' '
     cell.style.backgroundColor = 'rgb(192, 234, 137)'
 }
@@ -305,6 +300,8 @@ function checkGameIsOver() {
         document.querySelector('.face').innerHTML = SUNGLASS_SMILEY
     }
 }
+
+
 
 
 
