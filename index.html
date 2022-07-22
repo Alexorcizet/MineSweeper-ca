@@ -7,12 +7,19 @@
     <link rel="stylesheet" href="css/styles.css" />
     <title>Mine Sweeper Sprint</title>
   </head>
-  <body onload="init()">
+  <body  onload="initGame()">
     <div class="container">
-      <table></table>
-      <button onclick="play()">Play</button>
+      <div class="header">
+        <h1 class="mines-left"></h1>
+        <p class="life">Lives left : 3</p>
+        <button onclick="resetGame()" class="face">&#128516</button>
+        <button  onclick="easy()">Easy</button>
+        <button  onclick="medium()">Medium</button>
+        <button  onclick="hard()">Hard</button>
+        <p class="timer"><span class="min">Timer: 00:</span><span class="sec">00</span></p>
+      </div>
+      <div class="board-container"></div>
     </div>
-
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
   </body>

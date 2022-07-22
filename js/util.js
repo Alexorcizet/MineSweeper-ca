@@ -1,18 +1,6 @@
 'use strict'
 
-function copyMat(board) {
-    var newBoard = []
-    for (var i = 0; i < board; i++) {
-        newBoard[i] = []
-        for (var j = 0; j < board; j++) {
-            newBoard[i][j] = creatCell(i, j, board)
-        }
-    }
-
-    return newBoard
-}
-
-function countNeighbors(cellI, cellJ, mat) {
+function countNeighborsBombs(cellI, cellJ, mat) {
     var neighborsCount = 0;
 
     for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -20,8 +8,7 @@ function countNeighbors(cellI, cellJ, mat) {
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             if (i === cellI && j === cellJ) continue;
             if (j < 0 || j >= mat[0].length) continue;
-            var currCell = mat[i][j]
-            if (currCell.isMine) neighborsCount++;
+            if (mat[i][j].isMine) neighborsCount++;
         }
     }
     return neighborsCount;
@@ -50,15 +37,32 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min)
 }
 
-function renderCell(location, value) {
-    // Select the elCell and set the value
-    const elCell = document.querySelector(`#id-${location.i}-${location.j}`)
-    console.log('location:', location)
-    console.log('value:', value)
+function createMat(size) {
+    var mat = []
+    for (var i = 0; i < size; i++) {
+        var row = []
+        for (var j = 0; j < size; j++) {
+            row.push(creatCell())
+        }
+        mat.push(row)
+    }
+    return mat
+}
 
-    console.log('elCell:', elCell)
-
-    elCell.innerText = value
+function renderBoard(mat) {
+    var strHTML = '<table><tbody>\n'
+    for (var i = 0; i < mat.length; i++) {
+        strHTML += '\n<tr>\n'
+        for (var j = 0; j < mat[0].length; j++) {
+            strHTML += `<td  id="${i}-${j}" class="cell  "
+            onclick="cellClicked(this, ${i},${j})" oncontextmenu="markFlag(event)">`
+            strHTML += '</td>\n'
+        }
+        strHTML += `</tr>`
+    }
+    strHTML += '</tbody></table>'
+    const elContainer = document.querySelector('.board-container')
+    elContainer.innerHTML = strHTML
 }
 
 
