@@ -30,6 +30,9 @@ var gSeconds
 var gMinutes
 var gCellsCount
 var firstClicked
+var bomb = new Audio('sounds/bombHit.mp3');
+var lost = new Audio('sounds/gameLost.mp3')
+var win = new Audio('sounds/gameWon.mp3')
 //////////////////starter Functions ////////////////////
 function initGame() {
     gGame.shownCount = 0
@@ -165,6 +168,7 @@ function cellClicked(elCell, i, j) {
         if (gLevel.LIVES === 0) {
             gameOver()
         } else {
+            bomb.play()
             gBombsCounter--
             document.querySelector('.mines-left').innerHTML = `You have to disable ${gBombsCounter} bombs, Good luck!`
             gGame.markedCount++
@@ -231,6 +235,7 @@ function hard() {
 
 //////////////////////////////////////////////////////////////////////////////ENDGAME functions//////////////////////////////////////////////////////////////////////////////
 function gameOver() {
+    lost.play()
     gGame.isOn = false
     clearInterval(gTimer)
     document.querySelector('.face').innerHTML = SAD_SMILEY
@@ -253,6 +258,7 @@ function resetGame() {
 function checkGameIsOver() {
 
     if (gGame.markedCount === gLevel.MINES && gCellsCount === gGame.shownCount) {
+        win.play()
         document.querySelector('.mines-left').innerText = 'You Masters this Minefield Try a harder One'
         gGame.isOn = false
         clearInterval(gTimer)
