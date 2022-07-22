@@ -136,9 +136,7 @@ function cellClicked(elCell, i, j) {
         }
         setTimeout(setMinesNegsCount(gBoard), 1000)
     }
-    if (gBoard[i][j].isShown) return
-    if (!gGame.isOn) return
-    if (gBoard[i][j].isMarked) return
+    if (gBoard[i][j].isShown || !gGame.isOn || gBoard[i][j].isMarked) return
     if (!gBoard[i][j].minesAroundCount && !gBoard[i][j].isMine) {
         expandShown(gBoard, elCell, i, j)
         gBoard[i][j].isShown = true
