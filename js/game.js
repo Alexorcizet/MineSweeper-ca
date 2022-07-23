@@ -269,6 +269,7 @@ function hintNegs(cellI, cellJ) {
         if (i < 0 || i >= gBoard.length) continue;
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             if (j < 0 || j >= gBoard[0].length) continue;
+            if (gBoard[i][j].isShown) continue
             var currCell = document.getElementById(`${i}-${j}`)
             currCell.style.backgroundColor = 'darkGrey'
             currCell.style.color = numColors(gBoard[cellI][cellJ].minesAroundCount)
@@ -291,6 +292,7 @@ function reverseHint(cellI, cellJ) {
         if (i < 0 || i >= gBoard.length) continue;
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             if (j < 0 || j >= gBoard[0].length) continue;
+            if (gBoard[i][j].isShown) continue
             var currCell = document.getElementById(`${i}-${j}`)
             currCell.style.backgroundColor = 'rgb(192, 234, 137)'
             currCell.innerHTML = ' '
