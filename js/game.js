@@ -24,6 +24,7 @@ var gLevel = {
     MINES: 2,
     LIVES: 1,
 }
+var hintMode
 var hintCount
 var safeClick
 var gBombsCounter
@@ -40,6 +41,7 @@ var win = new Audio('sounds/gameWon.mp3')
 function initGame() {
     firstClicked = false
     gGame.isOn = false
+    hintMode = false
     gGame.shownCount = 0
     gGame.markedCount = 0
     gGame.secsPassed = 0
@@ -81,11 +83,14 @@ function creatCell() {
     return currCell
 }
 
-function randomMinePos(board) {
+function randomMinePos(board, i, j) {
     var emptyCells = getEmptyCells(board)
     while (gBombsCounter < gLevel.MINES) {
         gBombsCounter++
         var getEmptyCell = drawNum(emptyCells)
+        if (getEmptyCell.i === i && getEmptyCell.j === j) {
+            getEmptyCell = drawNum(emptyCells)
+        }
         board[getEmptyCell.i][getEmptyCell.j].isMine = true
     }
     return
@@ -157,13 +162,13 @@ function cellClicked(elCell, i, j) {
         firstClicked = true
         gGame.isOn = true
         gTimer = setInterval(incrementSeconds, 1000);
-        randomMinePos(gBoard)
-        if (gBoard[i][j].isMine) {
-            gBombsCounter--
-            gBoard[i][j].isMine = false
-            randomMinePos(gBoard)
-        }
+        randomMinePos(gBoard, i, j)
         setTimeout(setMinesNegsCount(gBoard), 1000)
+    }
+
+    if (hintMode) {
+        hintNegs(i, j)
+        return
     }
     if (gBoard[i][j].isShown || !gGame.isOn || gBoard[i][j].isMarked) return
     if (!gBoard[i][j].isShown) {
@@ -191,7 +196,6 @@ function cellClicked(elCell, i, j) {
     }
     checkGameIsOver()
 }
-
 
 function expandShown(board, elCell, cellI, cellJ) {
     for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -243,31 +247,58 @@ function reverseSafe(cell) {
     cell.style.backgroundColor = 'rgb(192, 234, 137)'
 }
 
-// function getHint() {
+function getHint() {
+    if (!gGame.isOn) return
+    if (!hintCount) return
+    if (hintMode) {
+        hintMode = false
+        if (!hintCount) document.querySelector('.hint').innerHTML = 'none left'
+        else document.querySelector('.hint').innerHTML = `${HINT.repeat(hintCount)}`
+        document.querySelector('.hint').style.backgroundColor = 'rgb(192, 234, 137)'
+    }
+    else {
+        hintMode = true
+        document.querySelector('.hint').style.backgroundColor = 'aliceBlue'
+    }
 
-//     // Create event listener
-//     document.addEventListener('click', (e) => {
-//         // Retrieve id from clicked element
-//         let elementId = e.target.id;
-//         // If element has id
-//         if (elementId !== '') {
-//             console.log(elementId);
-//         }
-//         // If element has no id
-//         else {
-//             console.log("An element without an id was clicked.");
-//         }
-//     }
-//     );
+}
 
+function hintNegs(cellI, cellJ) {
+    hintCount--
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= gBoard.length) continue;
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (j < 0 || j >= gBoard[0].length) continue;
+            var currCell = document.getElementById(`${i}-${j}`)
+            currCell.style.backgroundColor = 'darkGrey'
+            currCell.style.color = numColors(gBoard[cellI][cellJ].minesAroundCount)
+            if (gBoard[i][j].isMine) currCell.innerHTML = BOMB
+            else if (!gBoard[i][j].minesAroundCount) currCell.innerHTML = ' '
+            else {
+                currCell.innerHTML = gBoard[i][j].minesAroundCount
+                currCell.style.color = numColors(gBoard[i][j].minesAroundCount)
+            }
+        }
+    }
+    hintMode = false
+    document.querySelector('.hint').style.backgroundColor = 'rgb(192, 234, 137)'
+    setTimeout(() => reverseHint(cellI, cellJ), 1000)
+}
 
-//     // setTimeout(() => reverseHint(hintCell, getEmptyCell.i, getEmptyCell.j), 1000)
-// }
-
-// // function reverse(cell, i, j) {
-// //     cell.innerHTML = ' '
-// //     cell.style.backgroundColor = 'rgb(192, 234, 137)'
-// // }
+function reverseHint(cellI, cellJ) {
+    document.querySelector('.hint').innerHTML = `${HINT.repeat(hintCount)}`
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= gBoard.length) continue;
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (j < 0 || j >= gBoard[0].length) continue;
+            var currCell = document.getElementById(`${i}-${j}`)
+            currCell.style.backgroundColor = 'rgb(192, 234, 137)'
+            currCell.innerHTML = ' '
+        }
+    }
+    if (!hintCount) document.querySelector('.hint').innerHTML = 'none left'
+    else document.querySelector('.hint').innerHTML = `${HINT.repeat(hintCount)}`
+}
 
 ///////////////////////////Difficulty///////////////////////////
 
