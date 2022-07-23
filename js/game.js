@@ -24,6 +24,7 @@ var gLevel = {
     MINES: 2,
     LIVES: 1,
 }
+var memory
 var hintMode
 var hintCount
 var safeClick
@@ -37,8 +38,12 @@ var firstClicked
 var bomb = new Audio('sounds/bombHit.mp3');
 var lost = new Audio('sounds/gameLost.mp3')
 var win = new Audio('sounds/gameWon.mp3')
+////////////////////////////////////////////HighScores/////////////////////////////
+
+
 //////////////////starter Functions ////////////////////
 function initGame() {
+    memory = []
     firstClicked = false
     gGame.isOn = false
     hintMode = false
@@ -146,9 +151,9 @@ function incrementSeconds() {
         secHTML = `${gSeconds} `
     }
     if (gMinutes < 10) {
-        minHTML = `Timer: 0${gMinutes} : `
+        minHTML = `0${gMinutes}`
     } else if (gSeconds < 60) {
-        minHTML = `Timer: ${gMinutes} : `
+        minHTML = `${gMinutes}`
     }
     gSeconds += 1;
     gGame.secsPassed++
@@ -165,6 +170,8 @@ function cellClicked(elCell, i, j) {
         randomMinePos(gBoard, i, j)
         setTimeout(setMinesNegsCount(gBoard), 1000)
     }
+    memory.push(gBoard)
+    console.log('memory:', memory)
 
     if (hintMode) {
         hintNegs(i, j)
@@ -354,7 +361,6 @@ function resetGame() {
 }
 
 function checkGameIsOver() {
-
     if (gGame.markedCount === gLevel.MINES && gCellsCount === gGame.shownCount) {
         win.play()
         document.querySelector('.mines-left').innerText = 'You Mastered this Minefield Try a harder One'
@@ -364,6 +370,11 @@ function checkGameIsOver() {
     }
 }
 
+function undo() {
+    console.log('memory:', memory)
+    gBoard = memory.pop()
+    renderBoard(gBoard)
+}
 
 
 

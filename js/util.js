@@ -60,7 +60,7 @@ function createMat(size) {
 }
 
 function renderBoard(mat) {
-    var strHTML = '<table><tbody>\n'
+    var strHTML = '<table class="board"><tbody>\n'
     for (var i = 0; i < mat.length; i++) {
         strHTML += '\n<tr>\n'
         for (var j = 0; j < mat[0].length; j++) {

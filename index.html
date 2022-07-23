@@ -8,7 +8,6 @@
     <title>Mine Sweeper Sprint</title>
   </head>
   <body onload="initGame()">
-
       <div class="data-container">
         <div class="header">
           <h1 class="mines-left"></h1>
@@ -22,16 +21,12 @@
             <button onclick="hard()">Hard</button>
           </div>
         <div class="reset-and-time">
-
           <button onclick="getHint()" class="hint"></button>
           <button onclick="getSafe()" class="safe"></button>
           <button onclick="resetGame()" class="face">&#128516</button>
-
-          <p class="timer"><span class="min">Timer : 00 :</span><span class="sec">00</span></p></div>
-          <div class="board-container"></div>
+          <p class="timer">Timer: <span class="min">00</span>:<span class="sec">00</span></p></div>
         </div>
-      </div>
-
+        <div class="board-container"></div>
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
   </body>
