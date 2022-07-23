@@ -12,22 +12,33 @@ body {
   );
 }
 
+.container {
+  width: 100vw;
+  height: 91vh;
+  margin: auto;
+}
 .data-container {
   font-family: monospace;
   width: 800px;
   border-radius: 15px;
-  margin: 15px auto;
+  margin: auto;
   text-align: center;
 }
 
 .header {
   width: 600px;
   height: 100px;
-  margin: 50px auto;
+  margin: 0 auto 50px;
 }
 
 .hints {
   font-size: 1.5em;
+}
+
+.safe {
+  font-size: 1.3em;
+  font-weight: 600;
+  width: 100px;
 }
 
 .difficulty {
@@ -36,16 +47,32 @@ body {
   margin: auto;
 }
 
+button {
+  width: 100px;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  margin: 15px 15px;
+  font-weight: 550;
+  color: rgb(0, 0, 0);
+  background-color: rgb(192, 234, 137);
+}
 .reset-and-time {
-  width: 50%;
+  width: 70%;
   text-align: center;
-  margin: auto;
+  margin: 15px auto;
+}
+
+.reset-and-time .safe-click {
+  width: 135px;
+  font-size: 1.1rem;
 }
 
 .timer {
   font-size: 1.5em;
   font-weight: 600;
   color: rgb(247, 247, 231);
+  margin: 10px auto;
 }
 
 table {

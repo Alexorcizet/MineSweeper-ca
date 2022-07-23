@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css" />
     <title>Mine Sweeper Sprint</title>
   </head>
-  <body onclick="saveState()" onload="initGame()">
+  <body onload="initGame()">
     <div class="container">
       <div class="data-container">
         <div class="header">
@@ -20,14 +20,17 @@
             <button onclick="medium()">Medium</button>
             <button onclick="hard()">Hard</button>
           </div>
-        </div>
-        <div class="reset-and-time"><button onclick="resetGame()" class="face">&#128516</button>
+        <div class="reset-and-time">
+
+          <button onclick="gethint()" class="hint">&#x1F4A1</button>
+          <button onclick="resetGame()" class="face">&#128516</button>
+          <button onclick="getSafe()" class="safe"></button>
+
           <p class="timer"><span class="min">Timer : 00 :</span><span class="sec">00</span></p></div>
-          
           <div class="board-container"></div>
         </div>
       </div>
-      </div>
+    </div>
     <script src="js/util.js"></script>
     <script src="js/game.js"></script>
   </body>

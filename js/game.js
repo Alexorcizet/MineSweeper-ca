@@ -25,6 +25,7 @@ var gLevel = {
     LIVES: 1,
 }
 var hintCount
+var safeClick
 var gBombsCounter
 var gBoard
 var gTimer
@@ -38,7 +39,6 @@ var win = new Audio('sounds/gameWon.mp3')
 //////////////////starter Functions ////////////////////
 function initGame() {
     firstClicked = false
-    hintCount = 3
     gGame.isOn = false
     gGame.shownCount = 0
     gGame.markedCount = 0
@@ -46,14 +46,16 @@ function initGame() {
     gSeconds = 0
     gMinutes = 0
     gBombsCounter = 0
+    hintCount = 3
+    safeClick = 3
+    if (gLevel.SIZE === 4) gLevel.LIVES = 1
+    if (gLevel.SIZE === 8 || gLevel.SIZE === 12) gLevel.LIVES = 3
     incrementSeconds()
     clearInterval(gTimer)
     document.querySelector('.mines-left').innerHTML = `You have to disable ${gLevel.MINES} bombs, Good luck!`
-    document.querySelector('.hints').innerHTML = `You have  <span onclick="getHint()">${HINT.repeat(hintCount)}</span> hints, use them wisely!`
+    document.querySelector('.hint').innerHTML = `${HINT.repeat(hintCount)}`
+    document.querySelector('.safe').innerHTML = `safe: ${safeClick}`
     document.querySelector('.face').innerHTML = NORMAL_SMILEY
-    if (gLevel.SIZE === 4) gLevel.LIVES = 1
-    if (gLevel.SIZE === 8) gLevel.LIVES = 3
-    if (gLevel.SIZE === 12) gLevel.LIVES = 3
     document.querySelector('.life').innerHTML = `You're Current life count is :${HEART.repeat(gLevel.LIVES)}`
     gCellsCount = Math.pow(gLevel.SIZE, 2) - gLevel.MINES
     gBoard = createMat(gLevel.SIZE)
@@ -215,32 +217,60 @@ function renderCell(i, j, value, color) {
     gGame.shownCount++
 }
 
-function getHint() {
+function getSafe() {
 
     if (!gGame.isOn) return
-    hintCount--
-    if (hintCount === 0) document.querySelector('.hints').innerHTML = 'You are out of hints. Good luck'
-    else document.querySelector('.hints').innerHTML = `You have  <span onclick="getHint()">${HINT.repeat(hintCount)}</span> hints, use them wisely!`
+    if (!safeClick) return
+
+    safeClick--
+    document.querySelector('.safe').innerHTML = `safe: ${safeClick}`
 
     var noneMineCells = getNoneMInesOrSHownCells(gBoard)
     var getEmptyCell = drawNum(noneMineCells)
 
-    var hintCell = document.getElementById(`${getEmptyCell.i}-${getEmptyCell.j}`)
+    var safeCell = document.getElementById(`${getEmptyCell.i}-${getEmptyCell.j}`)
 
-    hintCell.style.backgroundColor = 'darkGrey'
-    hintCell.style.color = numColors(gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount)
-    if (!gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount) hintCell.innerHTML = ' '
-    else hintCell.innerHTML = `${gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount}`
+    safeCell.style.backgroundColor = 'darkGrey'
+    safeCell.style.color = numColors(gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount)
+    if (!gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount) safeCell.innerHTML = ' '
+    else safeCell.innerHTML = `${gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount}`
 
-    setTimeout(() => reverseHint(hintCell, getEmptyCell.i, getEmptyCell.j), 1000)
+    setTimeout(() => reverseSafe(safeCell), 1000)
 }
 
-function reverseHint(cell, i, j) {
+function reverseSafe(cell) {
     cell.innerHTML = ' '
     cell.style.backgroundColor = 'rgb(192, 234, 137)'
 }
 
+// function getHint() {
+
+//     // Create event listener
+//     document.addEventListener('click', (e) => {
+//         // Retrieve id from clicked element
+//         let elementId = e.target.id;
+//         // If element has id
+//         if (elementId !== '') {
+//             console.log(elementId);
+//         }
+//         // If element has no id
+//         else {
+//             console.log("An element without an id was clicked.");
+//         }
+//     }
+//     );
+
+
+//     // setTimeout(() => reverseHint(hintCell, getEmptyCell.i, getEmptyCell.j), 1000)
+// }
+
+// // function reverse(cell, i, j) {
+// //     cell.innerHTML = ' '
+// //     cell.style.backgroundColor = 'rgb(192, 234, 137)'
+// // }
+
 ///////////////////////////Difficulty///////////////////////////
+
 function easy() {
     gLevel = {
         SIZE: 4,
