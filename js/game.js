@@ -239,7 +239,7 @@ function getSafe() {
     if (!gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount) safeCell.innerHTML = ' '
     else safeCell.innerHTML = `${gBoard[getEmptyCell.i][getEmptyCell.j].minesAroundCount}`
 
-    setTimeout(() => reverseSafe(safeCell), 1000)
+    setTimeout(() => reverseSafe(safeCell), 600)
 }
 
 function reverseSafe(cell) {
